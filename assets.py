@@ -10,8 +10,12 @@ class ship(pygame.sprite.Sprite):
         self.image, self.rect = load_image("ship.png")
 
         self.image_normal = self.image
+        self.image_normal = pygame.transform.scale(self.image_normal, (32,32))
+        self.rect = self.image_normal.get_rect()
         self.image_left, self.rect_left = load_image("ship_left.png")
+        self.image_left = pygame.transform.scale(self.image_left, (32,32))
         self.image_right, self.rect_right = load_image("ship_right.png")
+        self.image_right = pygame.transform.scale(self.image_right, (32,32))
         
         self.left = False
         self.right = False
