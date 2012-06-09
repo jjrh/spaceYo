@@ -1,0 +1,4 @@
+main.py 	<-- contains the main game logic
+assets.py	<-- contains game objects
+helper.py	<-- contains useful functions
+gameGlobals.py	<-- contains global stuff
