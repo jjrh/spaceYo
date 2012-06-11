@@ -22,7 +22,33 @@ def draw_sin():
 
 
 
+class star:
+    def __init__(self):
+        pass
+
+stars = []
+
+
+def gen_space():
+    global stars
+    for i in range(1000):
+        stars.append([random.randint(0,WINX),random.randint(0,WINY)])
+        
+
+
+
 def render1():
+    global stars
+    speed = 1
+    for s in stars:
+        if s[1] > WINY:
+            s[1] = 0
+            s[0] = random.randint(0,WINX)
+        else:
+            s[1] += speed
+
+        pygame.draw.line(screen,(255,random.randint(0,255),0),s,s)
+def screen_craze():
     # (x-h)^2 + (y-k)^2 = r^2
     # y = r-x-h-k
     # c = (h,k)
@@ -141,7 +167,7 @@ screen = pygame.display.set_mode((WINX, WINY))
 pygame.display.set_caption('spaceYo')
 pygame.mouse.set_visible(0)
 
-
+gen_space()
 
 pygame.time.set_timer(USEREVENT+2, 100)
 
