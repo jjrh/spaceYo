@@ -153,6 +153,13 @@ def mainGameLoop():
             if event.type == USEREVENT+1:
                 enemies.add(enemy((random.randint(0,WINX),0)))
 
+            if event.type == USEREVENT+2:
+                for i in range(12):
+                    straightE = enemy((i*64,0))
+                    straightE.force_ai = 4
+                    straightE.bullet_rate = 400
+                    enemies.add(straightE)
+
 
 
 
@@ -192,7 +199,7 @@ def mainGameLoop():
         collisions = pygame.sprite.spritecollide(player1,bullets,True)
         if len(collisions) > 0:
             player1.HP = player1.HP - len(collisions)
-        print len(bullets)
+       # print len(bullets)
             
 
 
@@ -264,8 +271,8 @@ trans_bg = load_no_rect("score_hud.png")
 bomb = load_no_rect("bomb.png")
 
 
-
-pygame.time.set_timer(USEREVENT+2, 100)
+pygame.time.set_timer(USEREVENT+1, 1000)
+pygame.time.set_timer(USEREVENT+2, 3000)
 
 
 
@@ -288,7 +295,7 @@ allsprites = pygame.sprite.RenderPlain((player1))
 
 clock = pygame.time.Clock()
 
-pygame.time.set_timer(USEREVENT+1, 1000)
+
 
 
 end = False
