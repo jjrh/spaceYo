@@ -41,7 +41,21 @@ def gen_space():
         stars.append([random.randint(0,WINX),random.randint(0,WINY)])
         
 
+def drawPoints(points, c, surf):
+    for p in points:
+        point(p,c,surf)
 
+def rotatePoints(points):
+    for p in points:
+        y = p[1]
+        x = p[0]
+        p[0] = y
+        p[1] = x
+
+    return points
+
+def render_circle_animation(points, index):
+    pygame.draw.circle(screen,(255,0,255),points[index],32)
 
 def render1():
     global stars
@@ -96,7 +110,7 @@ def circle_type3(xCenter, yCenter, radius, c):
         pygame.draw.line(screen,c, (xCenter - x,yCenter - y),(xCenter - x, yCenter - y))
         x = x + 1
 
-def render_circle_points(xCenter, yCenter, radius):
+def render_circle_points(xCenter, yCenter, radius, rate=1):
     points = []
     x = 1
     r2 = radius*radius
@@ -113,7 +127,7 @@ def render_circle_points(xCenter, yCenter, radius):
         points.append([xCenter+x, yCenter-y])
         points.append([xCenter-x, yCenter+y])
         points.append([xCenter-x, yCenter-y])
-        x = x + 1
+        x = x + rate
 
     return points
 
@@ -123,7 +137,9 @@ def render_circle_points(xCenter, yCenter, radius):
 
 
 
-            
+
+
+
         
 
 
@@ -161,6 +177,13 @@ def screen_craze():
 
 def mainGameLoop():
     SCORE = 0
+    pointz = render_circle_points(400,300,100,2)
+    pointz += rotatePoints(pointz)
+#    pointz.sort()
+    pointz = sorted(pointz, key=lambda point: pointz[0])	
+    print pointz
+    pointz_flag = True
+    index = 0
     while not end:
         clock.tick(60)
         for event in pygame.event.get():
@@ -231,7 +254,28 @@ def mainGameLoop():
 
         screen.blit(background, (0, 0))
 	render1()
-        circle_type3(400,300,100,(0,255,0))
+#        circle_type3(400,300,100,(0,255,0))
+
+
+#	pointz = rotatePoints(pointz)
+
+	p_rate = 2
+	if pointz_flag:
+            if index < len(pointz)-p_rate:
+                index+=p_rate
+            else:
+                pointz_flag = False
+                
+	if pointz_flag == False:
+            if index > 0:
+                index = index - p_rate
+            else:
+                pointz_flag = True
+                
+                
+            
+        render_circle_animation(pointz,index)
+#	drawPoints(pointz,(255,255,0),screen)
 
         pygame.display.flip()
 
