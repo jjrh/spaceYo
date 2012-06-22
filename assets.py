@@ -1,5 +1,6 @@
 import pygame
 import random
+import math
 from helper import *
 from gameGlobals import *
 
@@ -30,8 +31,8 @@ class ship(pygame.sprite.Sprite):
         self.max_particles = 30
 
         self.bullets = pygame.sprite.Group()
-        self.bullet_speed = 10
-        self.bullet_rate = 1000 # in mili seconds
+        self.bullet_speed = 1
+        self.bullet_rate = 100 # in mili seconds
         self.shoot = False
         self.last_shot = self.timer
         
@@ -130,6 +131,7 @@ class bullet(pygame.sprite.Sprite):
         self.xForce = force[0]
         self.yForce = force[1]
         self.inc = 0.1
+        
     def update(self):
         if(self.xForce > 0):
             self.rect = self.rect.move(self.xForce+random.randint(0,10)+int(self.inc), self.yForce)
@@ -140,6 +142,7 @@ class bullet(pygame.sprite.Sprite):
         if(self.yForce < 0):
             self.rect = self.rect.move(self.xForce, self.yForce+random.randint(-10,0)-int(self.inc))
         self.inc +=0.1
+
 
 
 

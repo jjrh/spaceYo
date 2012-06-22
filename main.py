@@ -151,6 +151,7 @@ def mainGameLoop():
 
 
 
+
         allsprites.update()
         player1.particles.update()
         player1.bullets.update()
@@ -184,6 +185,9 @@ def mainGameLoop():
         player1.bullets.draw(screen)
         allsprites.draw(screen)
         renderSpace()
+        
+        #for b in player1.bullets:
+        #    b.blitParticles(screen)
         pygame.display.flip()
 
 points = []
