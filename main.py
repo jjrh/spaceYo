@@ -42,7 +42,11 @@ def menu():
                 if item_choice == 2:
                     selected = True
                     
-        
+
+
+        """
+        render stack. 
+        """
         background = pygame.Surface(screen.get_size())
         background = background.convert()
         background.fill((0, 0, 0))
@@ -170,16 +174,33 @@ def mainGameLoop():
         collisions = None
         collisions = pygame.sprite.spritecollide(player1, enemies, True)
         if len(collisions) > 0:
+            player1.HP -= 1
             end = False
+            
 
         collisions = None
         collisions = pygame.sprite.groupcollide(player1.bullets, enemies, True, True)
         if len(collisions) > 0:
             SCORE += len(collisions)
 
-        fonsurf = fon.render("SCORE: "+str(SCORE),3, (255,0,0))
+        bullets = pygame.sprite.Group()
+        for e in enemies:
+            collisions = None
+            bullets.add(e.bullets)
+            
 
+        collisions = pygame.sprite.spritecollide(player1,bullets,True)
+        if len(collisions) > 0:
+            player1.HP = player1.HP - len(collisions)
+        print len(bullets)
+            
+
+
+        fonsurf = fon.render("SCORE: "+str(SCORE),3, (255,0,0))
+        
         screen.blit(fonsurf, (WINX-100,13))
+        fonsurf = fon.render("HP: "+str(player1.HP),3,(255,0,0))
+        screen.blit(fonsurf, (0+30, 13))
         enemies.draw(screen)
         player1.particles.draw(screen)
         player1.bullets.draw(screen)

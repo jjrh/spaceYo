@@ -4,6 +4,7 @@ import math
 from helper import *
 from gameGlobals import *
 
+
 class ship(pygame.sprite.Sprite):
     def __init__(self):
         
@@ -35,6 +36,8 @@ class ship(pygame.sprite.Sprite):
         self.bullet_rate = 100 # in mili seconds
         self.shoot = False
         self.last_shot = self.timer
+
+        self.HP = 10
         
 
     def update(self):
@@ -167,7 +170,11 @@ class enemy(pygame.sprite.Sprite):
         self.last_direction_change = self.timer
         self.direction = 1
     def update(self):
-        self.shooting_ai_2()
+        choice = random.randint(1,2)
+        if choice == 1:
+            self.shooting_ai_1()
+        if choice == 2:
+            self.shooting_ai_2()
         
         for s in self.particles:
             if s.rect.centerx > WINX or s.rect.centery > WINY:
