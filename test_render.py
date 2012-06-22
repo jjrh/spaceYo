@@ -5,6 +5,12 @@ import time
 import random
 import math
 
+
+def point(p, c, surf):
+    pygame.draw.line(surf,c,p,p)
+
+
+
 end = False
 def draw_sin():
     w = 2
@@ -48,6 +54,83 @@ def render1():
             s[1] += speed
 
         pygame.draw.line(screen,(255,random.randint(0,255),0),s,s)
+
+
+# http://escience.anu.edu.au/lecture/cg/Circle/symmetry4.en.html <-- is the algorithm I used.
+def circle(xCenter, yCenter, radius, c):
+    x = 1
+    r2 = radius*radius
+    for x in range(radius):
+        y = int(math.sqrt(r2 - x*x) + 0.5)
+        pygame.draw.line(screen,c, (xCenter + x,yCenter + y),(xCenter + x, yCenter + y))
+        pygame.draw.line(screen,c, (xCenter + x,yCenter - y),(xCenter + x, yCenter - y))
+        pygame.draw.line(screen,c, (xCenter - x,yCenter + y),(xCenter - x, yCenter + y))
+        pygame.draw.line(screen,c, (xCenter - x,yCenter - y),(xCenter - x, yCenter - y))
+    
+def circle_type2(xCenter, yCenter, radius, c):
+    x = 1
+    r2 = radius*radius
+    while(x < radius):
+        y = int(math.sqrt(r2 - x*x) + 0.5)
+        pygame.draw.line(screen,c, (xCenter + x,yCenter + y),(xCenter + x, yCenter + y))
+        pygame.draw.line(screen,c, (xCenter + x,yCenter - y),(xCenter + x, yCenter - y))
+        pygame.draw.line(screen,c, (xCenter - x,yCenter + y),(xCenter - x, yCenter + y))
+        pygame.draw.line(screen,c, (xCenter - x,yCenter - y),(xCenter - x, yCenter - y))
+        x = x + 5
+        
+def circle_type3(xCenter, yCenter, radius, c):
+    x = 1
+    r2 = radius*radius
+
+    pygame.draw.line(screen,c, (xCenter,yCenter + radius),(xCenter, yCenter + radius))
+    pygame.draw.line(screen,c, (xCenter,yCenter + radius),(xCenter, yCenter + radius))
+    pygame.draw.line(screen,c, (xCenter + radius, yCenter),(xCenter + radius, yCenter))
+    pygame.draw.line(screen,c, (xCenter - radius,yCenter),(xCenter - radius, yCenter))
+    
+    y = int(math.sqrt(r2 - x*x) + 0.5)    
+    while(x < radius):
+        y = int(math.sqrt(r2 - x*x) + 0.5)    
+        pygame.draw.line(screen,c, (xCenter + x,yCenter + y),(xCenter + x, yCenter + y))
+        pygame.draw.line(screen,c, (xCenter + x,yCenter - y),(xCenter + x, yCenter - y))
+        pygame.draw.line(screen,c, (xCenter - x,yCenter + y),(xCenter - x, yCenter + y))
+        pygame.draw.line(screen,c, (xCenter - x,yCenter - y),(xCenter - x, yCenter - y))
+        x = x + 1
+
+def render_circle_points(xCenter, yCenter, radius):
+    points = []
+    x = 1
+    r2 = radius*radius
+    
+    points.append([xCenter,yCenter + radius])
+    points.append([xCenter,yCenter - radius])
+    points.append([xCenter+radius,yCenter])
+    points.append([xCenter-radius,yCenter])
+        
+    y = int(math.sqrt(r2 - x*x) + 0.5)    
+    while(x < radius):
+        y = int(math.sqrt(r2 - x*x) + 0.5)
+        points.append([xCenter+x, yCenter+y])
+        points.append([xCenter+x, yCenter-y])
+        points.append([xCenter-x, yCenter+y])
+        points.append([xCenter-x, yCenter-y])
+        x = x + 1
+
+    return points
+
+
+
+
+
+
+
+            
+        
+
+
+    
+    
+
+
 def screen_craze():
     # (x-h)^2 + (y-k)^2 = r^2
     # y = r-x-h-k
@@ -148,6 +231,7 @@ def mainGameLoop():
 
         screen.blit(background, (0, 0))
 	render1()
+        circle_type3(400,300,100,(0,255,0))
 
         pygame.display.flip()
 
